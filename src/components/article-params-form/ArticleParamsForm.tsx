@@ -13,8 +13,9 @@ import {
 	defaultArticleState,
 } from 'src/constants/articleProps';
 import { Text } from 'src/ui/text';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import clsx from 'clsx';
 
 import styles from './ArticleParamsForm.module.scss';
@@ -31,6 +32,14 @@ export const ArticleParamsForm = ({
 	const [isOpen, setIsOpen] = useState(false);
 
 	const [formState, setFormState] = useState<ArticleStateType>(articleState);
+
+	const asideRef = useRef<HTMLElement>(null);
+
+	useOutsideClickClose({
+		isOpen,
+		onChange: setIsOpen,
+		rootRef: asideRef as React.RefObject<HTMLDivElement>,
+	});
 
 	const updatedField = <K extends keyof ArticleStateType>(
 		field: K,
@@ -55,6 +64,7 @@ export const ArticleParamsForm = ({
 			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
 
 			<aside
+				ref={asideRef}
 				className={clsx(styles.container, {
 					[styles.container_open]: isOpen,
 				})}>
