@@ -10,6 +10,7 @@ import {
 	fontColors,
 	backgroundColors,
 	contentWidthArr,
+	defaultArticleState,
 } from 'src/constants/articleProps';
 import { Text } from 'src/ui/text';
 import { useState } from 'react';
@@ -43,7 +44,9 @@ export const ArticleParamsForm = ({
 	};
 
 	const handleReset = () => {
-		setFormState(articleState);
+		setFormState(defaultArticleState);
+		setArticleState(defaultArticleState);
+		setIsOpen(false);
 	};
 
 	return (
